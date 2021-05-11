@@ -58,9 +58,17 @@ async def update(ctx:commands.Context):
     embedVar.add_field(name="Update 2.0", value="Added new stuff and cooler embeds! \n Better Alpaca noises \n More online time \n Bug fixes \n Now a music bot \n Admin commands!", inline=False)
     await ctx.channel.send(embed=embedVar)
 @bot.command(name="source")
-@commands.cooldown(1,1, commands.BucketType.user)
+@commands.cooldown(1,3, commands.BucketType.user)
 async def source(ctx:commands.Context):
     await ctx.channel.send("Source code is on github! https://github.com/nuggetcatsoftware/Alpaca-bot")
+@bot.command(name="Issues")
+@commands.cooldown(1,3, commands.BucketType.user)
+async def issues():
+    embedVar=discord.Embed(title="Issues and suggestions", color=0x990000)
+    embedVar.add_field(name="Alpha", value="https://github.com/nuggetcatsoftware/Alpha/issues", inline=False)
+    embedVar.add_field(name="Alpaca bot", value="https://github.com/nuggetcatsoftware/Alpaca-bot/issues", inline=False)
+    embedVar.add_field(name="Operation Yellowbird", value="https://github.com/nuggetcatsoftware/Operation-Yellowbird/issues", inline=False)
+
 @bot.command(name="weather")
 @commands.cooldown(1, 10,commands.BucketType.user)
 async def weather(ctx, city):
