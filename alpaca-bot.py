@@ -7,6 +7,8 @@ from discord.errors import InvalidArgument
 from discord.ext import commands
 from discord.ext.commands.core import cooldown
 import random
+import wikipedia
+
 try:
     from googlesearch import search
 except ImportError:
@@ -61,7 +63,14 @@ async def update(ctx:commands.Context):
 @commands.cooldown(1,3, commands.BucketType.user)
 async def source(ctx:commands.Context):
     await ctx.channel.send("Source code is on github! https://github.com/nuggetcatsoftware/Alpaca-bot")
-
+@bot.command(name="wikipedia")
+@commands.cooldown(1, 3, commands.BucketType.user)
+async def wikipedia(ctx, query):
+    print(query)
+    backsticks = "```"
+    query = backsticks + query + backsticks
+    results = wikipedia.summary(query, sentences=3)
+    await ctx.channel.send(results)
 @bot.command(name="issue")
 @commands.cooldown(1,3, commands.BucketType.user)
 async def issue(ctx:commands.Context):
