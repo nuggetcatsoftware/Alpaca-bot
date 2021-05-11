@@ -61,9 +61,10 @@ async def update(ctx:commands.Context):
 @commands.cooldown(1,3, commands.BucketType.user)
 async def source(ctx:commands.Context):
     await ctx.channel.send("Source code is on github! https://github.com/nuggetcatsoftware/Alpaca-bot")
-@bot.command(name="Issues")
+
+@bot.command(name="issue")
 @commands.cooldown(1,3, commands.BucketType.user)
-async def issues(ctx:commands.Context):
+async def issue(ctx:commands.Context):
     embedVar=discord.Embed(title="Issues and suggestions", color=0x990000)
     embedVar.add_field(name="Alpha", value="https://github.com/nuggetcatsoftware/Alpha/issues", inline=False)
     embedVar.add_field(name="Alpaca bot", value="https://github.com/nuggetcatsoftware/Alpaca-bot/issues", inline=False)
