@@ -57,7 +57,10 @@ async def update(ctx:commands.Context):
     embedVar.add_field(name="Update 1.0", value="Add new embeds for commands and urban dictionary integration", inline=False)
     embedVar.add_field(name="Update 2.0", value="Added new stuff and cooler embeds! \n Better Alpaca noises \n More online time \n Bug fixes \n Now a music bot \n Admin commands!", inline=False)
     await ctx.channel.send(embed=embedVar)
-   
+@bot.command(name="source")
+@commands.cooldown(1,1, commands.BucketType.user)
+async def source(ctx:commands.Context):
+    await ctx.channel.send("Source code is on github! https://github.com/nuggetcatsoftware/Alpaca-bot")
 @bot.command(name="weather")
 @commands.cooldown(1, 10,commands.BucketType.user)
 async def weather(ctx, city):
