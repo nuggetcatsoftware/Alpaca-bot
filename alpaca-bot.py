@@ -8,7 +8,8 @@ from discord.ext import commands
 from discord.ext.commands.core import cooldown
 import random
 import wikipedia
-
+import  requests
+from bs4 import BeautifulSoup
 try:
     from googlesearch import search
 except ImportError:
@@ -71,6 +72,13 @@ async def wikipedia(ctx, query):
     query = backsticks + query + backsticks
     results = wikipedia.summary(query, sentences=3)
     await ctx.channel.send(results)
+@bot.comand(name="urban")
+@commands.cooldown(1,1,commands.BucketType.user)
+async def urban(ctx,query):
+    r = requests.get("http://www.urbandictionary.com/define.php?term={}".format(query))
+    soup = BeautifulSoup(r.content)
+    await ctx.send("Here is your definition on "+ query)
+    await ctx.send(soup.find("div",attrs={"class":"meaning"}).text)
 @bot.command(name="issue")
 @commands.cooldown(1,3, commands.BucketType.user)
 async def issue(ctx:commands.Context):
