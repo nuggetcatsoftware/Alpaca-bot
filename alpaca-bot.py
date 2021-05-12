@@ -12,12 +12,52 @@ import wikipedia
 import  requests
 from bs4 import BeautifulSoup
 from urllib import parse, request
+from discord.ext import tasks
+import os
+import youtube_dl
+import asyncio
 import re
 try:
     from googlesearch import search
 except ImportError:
     print("module google not found", "Check pip installation")
+youtube_dl.utils.bug_reports_message = lambda: ''
 
+ytdl_format_options = {
+    'format': 'bestaudio/best',
+    'restrictfilenames': True,
+    'noplaylist': True,
+    'nocheckcertificate': True,
+    'ignoreerrors': False,
+    'logtostderr': False,
+    'quiet': True,
+    'no_warnings': True,
+    'default_search': 'auto',
+    'source_address': '0.0.0.0' # bind to ipv4 since ipv6 addresses cause issues sometimes
+}
+
+ffmpeg_options = {
+    'options': '-vn'
+}
+
+ytdl = youtube_dl.YoutubeDL(ytdl_format_options)
+
+class YTDLSource(discord.PCMVolumeTransformer):
+    def __init__(self, source, *, data, volume=0.5):
+        super().__init__(source, volume)
+        self.data = data
+        self.title = data.get('title')
+        self.url = ""
+
+    @classmethod
+    async def from_url(cls, url, *, loop=None, stream=False):
+        loop = loop or asyncio.get_event_loop()
+        data = await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download=not stream))
+        if 'entries' in data:
+            # take first item from a playlist
+            data = data['entries'][0]
+        filename = data['title'] if stream else ytdl.prepare_filename(data)
+        return filename
 prescense=[
     "with your wife",
     "Grand Theft Auto IRL",
@@ -52,6 +92,12 @@ start_time = time.time()
 bot = commands.Bot(command_prefix="$")
 @bot.event
 async def on_ready():
+    for guild in bot.guilds:
+        for channel in guild.text_channels :
+            if str(channel) == "general" :
+                await channel.send('Bot Activated..')
+                await channel.send(file=discord.File('happyalpaca.gif'))
+        print('Active in {}\n Member Count : {}'.format(guild.name,guild.member_count))
     print(f'{bot.user.name} has connected to discord and is now online')
     print("Connection time: \n")
     print("--- %s seconds ---" % (time.time() - start_time))
@@ -93,6 +139,98 @@ async def youtube(ctx, search):
     print(search_results)
     # I will put just the first result, you can loop the response to show more results
     await ctx.send('https://www.youtube.com/watch?v=' + search_results[0])
+@bot.command(name='join')
+@commands.cooldown(1,2,BucketType.user)
+async def join(ctx):
+    if not ctx.message.author.voice:
+        await ctx.send("{} is not connected to a voice channel".format(ctx.message.author.name))
+        return
+    else:
+        channel = ctx.message.author.voice.channel
+    await channel.connect()
+
+@bot.command(name='leave')
+@commands.cooldown(1,2,BucketType.user)
+async def leave(ctx):
+    voice_client = ctx.message.guild.voice_client
+    if voice_client.is_connected():
+        await voice_client.disconnect()
+    else:
+        await ctx.send("The bot is not connected to a voice channel.")
+
+@bot.command(name='play', help='To play song')
+@commands.cooldown(1,1,BucketType.user)
+async def play(ctx,url):
+    try :
+        server = ctx.message.guild
+        voice_channel = server.voice_client
+
+        async with ctx.typing():
+            filename = await YTDLSource.from_url(url, loop=bot.loop)
+            voice_channel.play(discord.FFmpegPCMAudio(executable="ffmpeg.exe", source=filename))
+        await ctx.send('**Now playing:** {}'.format(filename))
+    except:
+        await ctx.send("The bot is not connected to a voice channel.")
+
+
+@bot.command(name='pause', help='This command pauses the song')
+@commands.cooldown(1,1,BucketType.user)
+async def pause(ctx):
+    voice_client = ctx.message.guild.voice_client
+    if voice_client.is_playing():
+        await voice_client.pause()
+    else:
+        await ctx.send("The bot is not playing anything at the moment.")
+    
+@bot.command(name='resume', help='Resumes the song')
+@commands.cooldown(1,1,BucketType.user)
+async def resume(ctx):
+    voice_client = ctx.message.guild.voice_client
+    if voice_client.is_paused():
+        await voice_client.resume()
+    else:
+        await ctx.send("The bot was not playing anything before this. Use play_song command")
+
+@bot.command(name='stop', help='Stops the song')
+@commands.cooldown(1,3,BucketType.user)
+async def stop(ctx):
+    voice_client = ctx.message.guild.voice_client
+    if voice_client.is_playing():
+        await voice_client.stop()
+    else:
+        await ctx.send("The bot is not playing anything at the moment.")
+@bot.command(name="query")
+@commands.cooldown(1,1,BucketType.user)
+async def query(ctx):
+    owner=str(ctx.guild.owner)
+    region = str(ctx.guild.region)
+    guild_id = str(ctx.guild.id)
+    memberCount = str(ctx.guild.member_count)
+    icon = str(ctx.guild.icon_url)
+    desc=ctx.guild.description
+    
+    embed = discord.Embed(
+        title=ctx.guild.name + " Server Information",
+        description=desc,
+        color=discord.Color.blue()
+    )
+    embed.set_thumbnail(url=icon)
+    embed.add_field(name="Owner", value=owner, inline=True)
+    embed.add_field(name="Server ID", value=guild_id, inline=True)
+    embed.add_field(name="Region", value=region, inline=True)
+    embed.add_field(name="Member Count", value=memberCount, inline=True)
+
+    await ctx.send(embed=embed)
+
+    members=[]
+    async for member in ctx.guild.fetch_members(limit=150) :
+        await ctx.send('Name : {}\t Status : {}\n Joined at {}'.format(member.display_name,str(member.status),str(member.joined_at)))
+
+@bot.command()
+@commands.cooldown(1,1,BucketType.user)
+async def about(ctx):
+    text = "Hi, I am Alpaca, im very smart!"
+    await ctx.send(text)
 @bot.command(name="update")
 @commands.cooldown(1,1,commands.BucketType.user)
 async def update(ctx:commands.Context):
