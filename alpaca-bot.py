@@ -58,10 +58,7 @@ async def on_ready():
     print("STARTED!!")
     showshow=random.choice(prescense)
     await bot.change_presence(activity=discord.Game(showshow))
-@bot.event
-async def on_message(message):
-    if message.author == bot.user:
-        return
+
 bot.remove_command('help')
 async def on_member_join(member):
     await member.create_dm()
@@ -181,44 +178,45 @@ async def weather(ctx, city):
     
     else:
         await ctx.send(" City Not Found ")
+
 @bot.listen()
 async def on_message(message):
     if "gabriel" in message.content.lower():
         await message.channel.send('Ma!')
         await bot.process_commands(message)
-    if "alpaca" in message.content.lower():
+    elif "alpaca" in message.content.lower():
         response=random.choice(alpaca_noises)
         await message.channel.send(response)
         await bot.process_commands(message)
-    if "nikita" in message.content.lower():
+    elif "nikita" in message.content.lower():
         await message.channel.send("Harrasspin")
         await bot.process_commands(message)
-    if "cunt" in message.content.lower():
+    elif "cunt" in message.content.lower():
         await message.channel.send("Pussy!")
         await bot.process_commands(message)
-    if "pls kill" in message.content.lower():
+    elif "pls kill" in message.content.lower():
         await message.channel.send("That's very blood thirsty of you {}".format(message.author.mention))
         await bot.process_commands(message)
-    if "nigger" in message.content.lower():
+    elif "nigger" in message.content.lower():
         await message.channel.send("Oi! Don't be racists!{}".format(message.author.mention))
         await bot.process_commands(message)
-    if "racist" in message.content.lower():
+    elif "racist" in message.content.lower():
         await message.channel.send("You can't be racist if there's no other race -Adolf Hitler")
         await bot.process_commands(message)
-    if "valorant" in message.content.lower():
+    elif "valorant" in message.content.lower():
         await message.channel.send("Imagine playing Valorant when you can make your own game -Alpaca")
         await bot.process_commands(message)
-    if "dick" in message.content.lower():
+    elif "dick" in message.content.lower():
         await message.channel.send("Pussy")
         await bot.process_commands(message)
-    if "China" in message.content.lower():
+    elif "China" in message.content.lower():
         await message.channel.send("Wuhanhanhanhan")
         await bot.process_commands(message)
-    if "good" in message.content.lower():
+    elif "good" in message.content.lower():
         response=random.choice(goodresponse)
         await message.channel.send(response)
         await bot.process_commands(message)
-    if "bad" in message.content.lower():
+    elif "bad" in message.content.lower():
         resoinse=random.choice(badresponse)
         await message.channel.send(resoinse)
         await bot.process_commands(message) 
