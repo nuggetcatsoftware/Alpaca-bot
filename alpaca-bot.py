@@ -150,7 +150,7 @@ async def join(ctx):
         return
     else:
         channel = ctx.message.author.voice.channel
-    await channel.connect()
+        await channel.connect()
 
 @bot.command(name='die')
 @commands.cooldown(1,2,BucketType.user)
