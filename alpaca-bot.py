@@ -166,7 +166,7 @@ async def weather(ctx, city):
         await ctx.send(" City Not Found ")
 @bot.listen()
 async def on_message(message):
-    if "Gabriel" in message.content.lower():
+    if "gabriel" in message.content.lower():
         await message.channel.send('Ma!')
         await bot.process_commands(message)
     if "alpaca" in message.content.lower():
