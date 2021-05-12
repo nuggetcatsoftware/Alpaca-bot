@@ -21,24 +21,18 @@ prescense=[
     "Human simulator",
     "OnlyAlpacas"
 ]
-alpaca_response=[
-    "Pwwaaa!",
-    "Pwaaat!",
-    "Screw you",
-    "shut up I am playing Gta IRL"
-]
-TOKEN = "never gonna give you up"
+TOKEN = "ODIxMzE4NjU1NjU1OTM2MDEw.YFB-mg.NbEO1jV4f0tpilPegAgTjiVOhwY"
 start_time = time.time()
 bot = commands.Bot(command_prefix="$")
 @bot.event
-async def on_ready(ctx):
+async def on_ready():
     print(f'{bot.user.name} has connected to discord and is now online')
     print("Connection time: \n")
     print("--- %s seconds ---" % (time.time() - start_time))
     print("STARTED!!")
     showshow=random.choice(prescense)
     await bot.change_presence(activity=discord.Game(showshow))
-    await ctx.send("Im back motherfuckers")
+
 bot.remove_command('help')
 async def on_member_join(member):
     await member.create_dm()
