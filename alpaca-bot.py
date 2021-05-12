@@ -21,9 +21,15 @@ prescense=[
     "Human simulator",
     "OnlyAlpacas"
 ]
+alpaca_response=[
+    "Pwwaaa!",
+    "Pwaaat!",
+    "Screw you",
+    "shut up I am playing Gta IRL"
+]
 TOKEN = "never gonna give you up"
 start_time = time.time()
-bot = commands.Bot(command_prefix="@")
+bot = commands.Bot(command_prefix="$")
 @bot.event
 async def on_ready():
     print(f'{bot.user.name} has connected to discord and is now online')
@@ -47,10 +53,10 @@ async def ping(ctx: commands.Context):
 @commands.cooldown(1,1,commands.BucketType.user)
 async def help(ctx:commands.Context):
     embedVar = discord.Embed(title="Alpaca Help", description="Alpaca is here to help someone who is in distress uwu", color=0xffd700)
-    embedVar.add_field(name="Wikipedia", value="Function: \n Searches valid input on wikipedia \n Syntax: \n @wikipedia (stuff)", inline=False)
-    embedVar.add_field(name="Urban", value="Function: \n Searches urban dictionary\n Syntax: \n @urban (stuff) ", inline=False)
-    embedVar.add_field(name="Updates", value="Function: Check recent updates\n Syntax: \n @update", inline=False)
-    embedVar.add_field(name="Weather", value="Check your local weather with this awesome command! \nSyntax: \n @weather(city)", inline=False)
+    embedVar.add_field(name="Wikipedia", value="Function: \n Searches valid input on wikipedia \n Syntax: \n $wikipedia (stuff)", inline=False)
+    embedVar.add_field(name="Urban", value="Function: \n Searches urban dictionary\n Syntax: \n $urban (stuff) ", inline=False)
+    embedVar.add_field(name="Updates", value="Function: Check recent updates\n Syntax: \n $update", inline=False)
+    embedVar.add_field(name="Weather", value="Check your local weather with this awesome command! \nSyntax: \n $weather(city)", inline=False)
     embedVar.add_field(name="Ping", value="Check current ping \n Syntax: \n $ping", inline=False)
     embedVar.add_field(name="Source code", value="Check the source code \n Syntax: \n $source", inline=False)
     embedVar.add_field(name="Issues", value="Get the links to report an issue regarding any projects on NuggetCat. \n Syntax: \n $issue")
@@ -163,6 +169,7 @@ async def weather(ctx, city):
     
     else:
         await ctx.send(" City Not Found ")
+
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandOnCooldown):
