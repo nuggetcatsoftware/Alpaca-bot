@@ -114,11 +114,14 @@ async def wikipedia(ctx, query):
     await ctx.channel.send(results)
 @bot.command(name="urban")
 @commands.cooldown(1,1,commands.BucketType.user)
-async def urban(ctx,query):
+async def urban(ctx,query,count = 1):
+    i = 0
     r = requests.get("http://www.urbandictionary.com/define.php?term={}".format(query))
     soup = BeautifulSoup(r.content)
-    await ctx.send("Here is your definition on "+ query)
-    await ctx.send(soup.find("div",attrs={"class":"meaning"}).text)
+    for entry in soup.find_all("div", class_="meaning"):
+        if (i := i + 1)  == int(count):
+            await ctx.send("Here is your definition on "+ query)
+            await ctx.send(entry.text)
 @bot.command(name="issue")
 @commands.cooldown(1,3, commands.BucketType.user)
 async def issue(ctx:commands.Context):
