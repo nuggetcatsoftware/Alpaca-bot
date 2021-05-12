@@ -151,6 +151,14 @@ async def join(ctx):
     else:
         channel = ctx.message.author.voice.channel
         await channel.connect()
+@bot.command(name="harrass")
+@commands.cooldown(1,10,BucketType.user)
+async def harrass(ctx, pingtarget: discord.member, pingping):
+    if pingping >30:
+        await ctx.send("Dude that's an overkill don't try to kill the server")
+    else:
+        for i in range(pingping):
+            await ctx.send(pingtarget.mention)
 
 @bot.command(name='die')
 @commands.cooldown(1,2,BucketType.user)
