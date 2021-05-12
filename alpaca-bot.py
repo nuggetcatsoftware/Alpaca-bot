@@ -21,7 +21,7 @@ prescense=[
     "Human simulator",
     "OnlyAlpacas"
 ]
-TOKEN = "ODIxMzE4NjU1NjU1OTM2MDEw.YFB-mg.NbEO1jV4f0tpilPegAgTjiVOhwY"
+TOKEN = "nonoono"
 start_time = time.time()
 bot = commands.Bot(command_prefix="$")
 @bot.event
