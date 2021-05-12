@@ -1,7 +1,7 @@
 discord
-googlesearch
+google
 wikipedia
-BeautifulSoup
+beautifulsoup4==4.9.3
 requests
 urllib3==1.26.2
 discord==1.0.1
