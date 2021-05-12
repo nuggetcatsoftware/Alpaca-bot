@@ -58,7 +58,10 @@ async def on_ready():
     print("STARTED!!")
     showshow=random.choice(prescense)
     await bot.change_presence(activity=discord.Game(showshow))
-
+@bot.event
+async def on_message(message):
+    if message.author == bot.user:
+        return
 bot.remove_command('help')
 async def on_member_join(member):
     await member.create_dm()
@@ -218,7 +221,7 @@ async def on_message(message):
     if "bad" in message.content.lower():
         resoinse=random.choice(badresponse)
         await message.channel.send(resoinse)
-        await bot.process_commands(message)
+        await bot.process_commands(message) 
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandOnCooldown):
