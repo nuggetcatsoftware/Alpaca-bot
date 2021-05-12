@@ -3,3 +3,4 @@ googlesearch
 wikipedia
 BeautifulSoup
 requests
+urllib3==1.26.2
