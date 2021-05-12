@@ -181,6 +181,8 @@ async def weather(ctx, city):
 
 @bot.listen()
 async def on_message(message):
+    if message.author == bot.user:
+        return
     if "gabriel" in message.content.lower():
         await message.channel.send('Ma!')
         await bot.process_commands(message)
