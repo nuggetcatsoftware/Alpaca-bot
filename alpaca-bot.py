@@ -31,13 +31,14 @@ TOKEN = "never gonna give you up"
 start_time = time.time()
 bot = commands.Bot(command_prefix="$")
 @bot.event
-async def on_ready():
+async def on_ready(ctx):
     print(f'{bot.user.name} has connected to discord and is now online')
     print("Connection time: \n")
     print("--- %s seconds ---" % (time.time() - start_time))
     print("STARTED!!")
     showshow=random.choice(prescense)
     await bot.change_presence(activity=discord.Game(showshow))
+    await ctx.send("Im back motherfuckers")
 bot.remove_command('help')
 async def on_member_join(member):
     await member.create_dm()
