@@ -127,7 +127,10 @@ async def help(ctx:commands.Context):
     embedVar.add_field(name="Ping", value="Check current ping \n Syntax: \n $ping", inline=False)
     embedVar.add_field(name="youtube", value="Search youtube \n Syntax: \n $youtube (item)", inline=False)
     embedVar.add_field(name="Source code", value="Check the source code \n Syntax: \n $source", inline=False)
-    embedVar.add_field(name="Issues", value="Get the links to report an issue regarding any projects on NuggetCat. \n Syntax: \n $issue")
+    embedVar.add_field(name="Issues", value="Get the links to report an issue regarding any projects on NuggetCat. \n Syntax: \n $issue", inline=False)
+    embedVar.add_field(name="music", value="Play music. \n syntax: \n 1. Join vc ($join) \n 2. Leave vc ($die) \n 3. Play song ($song (url)) \n 4. Pause ($pause) \n 5. Resume ($resume) \n 6. Stop ($stop)", inline=False)
+    embedVar.add_field(name="query", value="For users who question their existence. \n syntax: \n $query", inline=False)
+    embedVar.add_field(name="about", value="Know more about Alpaca and his developer!", inline=False)
     await ctx.channel.send(embed=embedVar)
 @bot.command(name="youtube")
 @commands.cooldown(1,1,BucketType.user)
@@ -149,9 +152,9 @@ async def join(ctx):
         channel = ctx.message.author.voice.channel
     await channel.connect()
 
-@bot.command(name='leave')
+@bot.command(name='die')
 @commands.cooldown(1,2,BucketType.user)
-async def leave(ctx):
+async def die(ctx):
     voice_client = ctx.message.guild.voice_client
     if voice_client.is_connected():
         await voice_client.disconnect()
