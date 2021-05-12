@@ -1,0 +1,5 @@
+discord
+googlesearch
+wikipedia
+BeautifulSoup
+requests
