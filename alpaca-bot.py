@@ -95,7 +95,7 @@ async def on_ready():
     for guild in bot.guilds:
         for channel in guild.text_channels :
             if str(channel) == "general" :
-                await channel.send('Bot Activated..')
+                await channel.send("I'm BACK!Pwaaaa!")
                 await channel.send(file=discord.File('happyalpaca.gif'))
         print('Active in {}\n Member Count : {}'.format(guild.name,guild.member_count))
     print(f'{bot.user.name} has connected to discord and is now online')
