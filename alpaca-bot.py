@@ -31,6 +31,20 @@ alpaca_noises=[
     "Shut up im playing minecraft",
     "imagine playing valorant, when you can make your own game"
 ]
+goodresponse=[
+    "nice",
+    "acceptable",
+    "not bad",
+    "awesome",
+    "cool",
+    ":kekw:"
+]
+badresponse=[
+    "not good",
+    "crap",
+    "shit",
+    "Know your fucking place trash"
+]
 file=open("token.txt","r")
 lines=file.readlines()
 TOKEN=lines[0]
@@ -172,6 +186,38 @@ async def on_message(message):
     if "alpaca" in message.content.lower():
         response=random.choice(alpaca_noises)
         await message.channel.send(response)
+        await bot.process_commands(message)
+    if "nikita" in message.content.lower():
+        await message.channel.send("Harrasspin")
+        await bot.process_commands(message)
+    if "cunt" in message.content.lower():
+        await message.channel.send("Pussy!")
+        await bot.process_commands(message)
+    if "pls kill" in message.content.lower():
+        await message.channel.send("That's very blood thirsty of you {}".format(message.author.mention))
+        await bot.process_commands(message)
+    if "nigger" in message.content.lower():
+        await message.channel.send("Oi! Don't be racists!{}".format(message.author.mention))
+        await bot.process_commands(message)
+    if "racist" in message.content.lower():
+        await message.channel.send("You can't be racist if there's no other race -Adolf Hitler")
+        await bot.process_commands(message)
+    if "valorant" in message.content.lower():
+        await message.channel.send("Imagine playing Valorant when you can make your own game -Alpaca")
+        await bot.process_commands(message)
+    if "dick" in message.content.lower():
+        await message.channel.send("Pussy")
+        await bot.process_commands(message)
+    if "China" in message.content.lower():
+        await message.channel.send("Wuhanhanhanhan")
+        await bot.process_commands(message)
+    if "good" in message.content.lower():
+        response=random.choice(goodresponse)
+        await message.channel.send(response)
+        await bot.process_commands(message)
+    if "bad" in message.content.lower():
+        resoinse=random.choice(badresponse)
+        await message.channel.send(resoinse)
         await bot.process_commands(message)
 @bot.event
 async def on_command_error(ctx, error):
