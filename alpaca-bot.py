@@ -327,6 +327,9 @@ async def on_message(message):
     if "gabriel" in message.content.lower():
         await message.channel.send('Ma!')
         await bot.process_commands(message)
+    elif "pwa" in message.content.lower():
+        await message.channel.send('Pwaaaa! :)')
+        await bot.process_commands(message)      
     elif "alpaca" in message.content.lower():
         response=random.choice(alpaca_noises)
         await message.channel.send(response)
@@ -363,6 +366,8 @@ async def on_message(message):
         resoinse=random.choice(badresponse)
         await message.channel.send(resoinse)
         await bot.process_commands(message) 
+
+
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandOnCooldown):
