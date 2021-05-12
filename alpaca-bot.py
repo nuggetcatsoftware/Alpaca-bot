@@ -5,11 +5,14 @@ from discord import embeds
 from discord import message
 from discord.errors import InvalidArgument
 from discord.ext import commands
+from discord.ext.commands.cooldowns import BucketType
 from discord.ext.commands.core import cooldown
 import random
 import wikipedia
 import  requests
 from bs4 import BeautifulSoup
+from urllib import parse, request
+import re
 try:
     from googlesearch import search
 except ImportError:
@@ -21,7 +24,16 @@ prescense=[
     "Human simulator",
     "OnlyAlpacas"
 ]
-TOKEN = "nonoono"
+alpaca_noises=[
+    "pwaaa!",
+    "pwaaaaaat!",
+    "screw you",
+    "Shut up im playing minecraft",
+    "imagine playing valorant, when you can make your own game"
+]
+file=open("token.txt","r")
+lines=file.readlines()
+TOKEN=lines[0]
 start_time = time.time()
 bot = commands.Bot(command_prefix="$")
 @bot.event
@@ -53,9 +65,20 @@ async def help(ctx:commands.Context):
     embedVar.add_field(name="Updates", value="Function: Check recent updates\n Syntax: \n $update", inline=False)
     embedVar.add_field(name="Weather", value="Check your local weather with this awesome command! \nSyntax: \n $weather(city)", inline=False)
     embedVar.add_field(name="Ping", value="Check current ping \n Syntax: \n $ping", inline=False)
+    embedVar.add_field(name="youtube", value="Search youtube \n Syntax: \n $youtube (item)", inline=False)
     embedVar.add_field(name="Source code", value="Check the source code \n Syntax: \n $source", inline=False)
     embedVar.add_field(name="Issues", value="Get the links to report an issue regarding any projects on NuggetCat. \n Syntax: \n $issue")
     await ctx.channel.send(embed=embedVar)
+@bot.command(name="youtube")
+@commands.cooldown(1,1,BucketType.user)
+async def youtube(ctx, search):
+    query_string = parse.urlencode({'search_query': search})
+    html_content = request.urlopen('http://www.youtube.com/results?' + query_string)
+    # print(html_content.read().decode())
+    search_results = re.findall('href=\"\\/watch\\?v=(.{11})', html_content.read().decode())
+    print(search_results)
+    # I will put just the first result, you can loop the response to show more results
+    await ctx.send('https://www.youtube.com/watch?v=' + search_results[0])
 @bot.command(name="update")
 @commands.cooldown(1,1,commands.BucketType.user)
 async def update(ctx:commands.Context):
@@ -105,42 +128,19 @@ async def weather(ctx, city):
     # base_url variable to store url
     base_url = "http://api.openweathermap.org/data/2.5/weather?"
     
-    # Give city name
     city_name = city
-    
-    # complete_url variable to store
-    # complete url address
     complete_url = base_url + "appid=" + api_key + "&q=" + city_name
-    
-    # get method of requests module
-    # return response object
     response = requests.get(complete_url)
     
     # json method of response object 
     # convert json format data into
     # python format data
     x = response.json()
-    
-    # Now x contains list of nested dictionaries
-    # Check the value of "cod" key is equal to
-    # "404", means city is found otherwise,
-    # city is not found
     if x["cod"] != "404":
-    
-        # store the value of "main"
-        # key in variable y
         y = x["main"]
-    
-        # store the value corresponding
-        # to the "temp" key of y
         current_temperature = y["temp"]
-    
-        # store the value corresponding
-        # to the "pressure" key of y
+        current_temperature= current_temperature-273.15
         current_pressure = y["pressure"]
-    
-        # store the value corresponding
-        # to the "humidity" key of y
         current_humidiy = y["humidity"]
     
         # store the value of "weather"
@@ -153,7 +153,7 @@ async def weather(ctx, city):
         weather_description = z[0]["description"]
     
         # print following values
-        await ctx.send(" Temperature (in kelvin unit) = " +
+        await ctx.send(" Temperature (Celcius) = " +
                         str(current_temperature) + 
             "\n atmospheric pressure (in hPa unit) = " +
                         str(current_pressure) +
@@ -164,7 +164,15 @@ async def weather(ctx, city):
     
     else:
         await ctx.send(" City Not Found ")
-
+@bot.listen()
+async def on_message(message):
+    if "Gabriel" in message.content.lower():
+        await message.channel.send('Ma!')
+        await bot.process_commands(message)
+    if "alpaca" in message.content.lower():
+        response=random.choice(alpaca_noises)
+        await message.channel.send(response)
+        await bot.process_commands(message)
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandOnCooldown):
