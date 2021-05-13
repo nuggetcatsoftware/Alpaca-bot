@@ -269,7 +269,7 @@ async def urban(ctx,query,count = 1):
     r = requests.get("http://www.urbandictionary.com/define.php?term={}".format(query))
     soup = BeautifulSoup(r.content)
     item_id = int(count)
-    entries = soup.find_all("div", class_="meaning"):
+    entries = soup.find_all("div", class_="meaning")
     if item_id == 1:
         item_id -= 1
     await ctx.send("Here is your definition on "+ query)
