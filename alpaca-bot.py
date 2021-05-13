@@ -379,6 +379,9 @@ async def on_message(message):
         resoinse=random.choice(badresponse)
         await message.channel.send(resoinse)
         await bot.process_commands(message) 
+    elif "sad" in message.content.lower():
+        await message.channel.send("Sadge")
+        await bot.process_commands(message)
 
 
 @bot.event
