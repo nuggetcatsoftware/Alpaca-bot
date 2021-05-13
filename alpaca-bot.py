@@ -119,7 +119,8 @@ async def urban(ctx,query,count = 1):
     r = requests.get("http://www.urbandictionary.com/define.php?term={}".format(query))
     soup = BeautifulSoup(r.content)
     for entry in soup.find_all("div", class_="meaning"):
-        if (i := i + 1)  == int(count):
+        i += 1
+        if i == int(count):
             await ctx.send("Here is your definition on "+ query)
             await ctx.send(entry.text)
 @bot.command(name="issue")
