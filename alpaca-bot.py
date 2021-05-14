@@ -160,7 +160,7 @@ async def join(ctx):
     else:
         channel = ctx.message.author.voice.channel
         await channel.connect()
-@bot.command(name="8ball")
+@bot.command(name="ball")
 @commands.cooldown(1,1,BucketType.user)
 async def ball(ctx, query):
     print(query)
