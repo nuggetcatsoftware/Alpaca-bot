@@ -317,6 +317,23 @@ async def on_message(message):
     elif "happy" in message.content.lower():
         await message.channel.send("IKR, things are simple when you're happy")
         await bot.process_commands(message)
+    elif "pls rob" in message.content.lower():
+        await message.channel.send("Thats not very nice{}".format(message.author.mention))
+        await message.channel.send("Thats not very nice{}".format(message.author.mention))
+        await message.channel.send("Thats not very nice{}".format(message.author.mention))
+        await message.channel.send("Thats not very nice{}".format(message.author.mention))
+        await message.channel.send("Thats not very nice{}".format(message.author.mention))
+        await message.channel.send("Thats not very nice{}".format(message.author.mention))
+        await message.channel.send("Thats not very nice{}".format(message.author.mention))
+        await message.channel.send("Thats not very nice{}".format(message.author.mention))
+        await message.channel.send("Thats not very nice{}".format(message.author.mention))
+        await message.channel.send("Thats not very nice{}".format(message.author.mention))
+        await message.channel.send("Thats not very nice{}".format(message.author.mention))
+        await message.channel.send("Thats not very nice{}".format(message.author.mention))
+        await message.channel.send("Thats not very nice{}".format(message.author.mention))
+        await message.channel.send("Thats not very nice{}".format(message.author.mention))
+        await message.channel.send("Thats not very nice{}".format(message.author.mention))
+        await bot.process_commands(message)
 
 @bot.event
 async def on_command_error(ctx, error):
