@@ -207,6 +207,8 @@ async def repeat(ctx, repeater):
         await ctx.channel.send("We know")
     elif repeater.lower() =="i am gay":
         await ctx.channel.send("We know")
+    else:
+        await ctx.channel.send(repeater)
 @bot.command(name="weather")
 @commands.cooldown(1, 10,commands.BucketType.user)
 async def weather(ctx, city):
