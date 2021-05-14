@@ -85,6 +85,14 @@ badresponse=[
     "shit",
     "Know your fucking place trash"
 ]
+ballresponse=[
+    "No",
+    "yes",
+    "concentrate and try again",
+    "not likely",
+    "Likely",
+    "That's not gonna happen"
+]
 file=open("token.txt","r")
 lines=file.readlines()
 TOKEN=lines[0]
@@ -151,19 +159,21 @@ async def join(ctx):
     else:
         channel = ctx.message.author.voice.channel
         await channel.connect()
+@bot.command(name="8ball")
+@commands.cooldown(1,1,BucketType.user)
+async def ball(ctx, query):
+    print(query)
+    response=random.choice(ballresponse)
+    await ctx.send(response)
 @bot.command(name="harass")
 @commands.cooldown(1,10,BucketType.user)
 async def harass(ctx, pingtarget, pingping):
-    print(pingtarget)
-    print(pingping)
     if pingping >30:
         await ctx.send("Dude that's an overkill don't try to kill the server")
     else:
         print(pingtarget)
-        pingping=int(pingping)
-        pingtarget=pingtarget.discord.Member
         for i in range(pingping):
-            await ctx.send(pingtarget.mention)
+            await ctx.send("Hi {}".format.pingtarget.mention)
 
 @bot.command(name='die')
 @commands.cooldown(1,2,BucketType.user)
