@@ -281,7 +281,7 @@ async def wikipedia(ctx, query):
 @commands.cooldown(1,1,commands.BucketType.user)
 async def urban(ctx,query,count = 1):
     r = requests.get("http://www.urbandictionary.com/define.php?term={}".format(query))
-    soup = BeautifulSoup(r.content)
+    soup = BeautifulSoup(r.content, features="html.parser")
     item_id = int(count)
     entries = soup.find_all("div", class_="meaning")
     if item_id == 1:
