@@ -272,7 +272,7 @@ async def urban(ctx,query,count = 1):
     entries = soup.find_all("div", class_="meaning")
     if item_id == 1:
         item_id -= 1
-    if entries[item_id] < len (entries):
+    if item_id < len (entries):
         await ctx.send("Here is your definition on "+ query)
         await ctx.send(entries[item_id].text)
     else:
