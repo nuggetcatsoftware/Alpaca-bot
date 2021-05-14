@@ -120,6 +120,68 @@ async def on_member_join(member):
     embedVar.add_field(name="Let's get started!", value="Type: (@help) to get started!!", inline=False)
     await member.dm_channel.send(f'Hi {member.name}')
     await member.dn_channel.send(embed=embedVar)
+
+
+
+@bot.command(name='play', help='To play song')
+async def play(ctx,url):
+    
+    try :
+        server = ctx.message.guild
+        voice_channel = server.voice_client
+
+        async with ctx.typing():
+            filename = await YTDLSource.from_url(url, loop=bot.loop)
+            voice_channel.play(discord.FFmpegPCMAudio(executable="ffmpeg.exe", source=filename))
+        await ctx.send('**Now playing:** {}'.format(filename))
+    except:
+        await ctx.send("The bot is not connected to a voice channel.")
+
+
+@bot.command(name='join', help='Tells the bot to join the voice channel')
+async def join(ctx):
+    if not ctx.message.author.voice:
+        await ctx.send("{} is not connected to a voice channel".format(ctx.message.author.name))
+        return
+    else:
+        channel = ctx.message.author.voice.channel
+    await channel.connect()
+
+
+@bot.command(name='pause', help='This command pauses the song')
+async def pause(ctx):
+    voice_client = ctx.message.guild.voice_client
+    if voice_client.is_playing():
+        await voice_client.pause()
+    else:
+        await ctx.send("The bot is not playing anything at the moment.")
+    
+@bot.command(name='resume', help='Resumes the song')
+async def resume(ctx):
+    voice_client = ctx.message.guild.voice_client
+    if voice_client.is_paused():
+        await voice_client.resume()
+    else:
+        await ctx.send("The bot was not playing anything before this. Use play_song command")
+    
+
+
+@bot.command(name='leave', help='To make the bot leave the voice channel')
+async def leave(ctx):
+    voice_client = ctx.message.guild.voice_client
+    if voice_client.is_connected():
+        await voice_client.disconnect()
+    else:
+        await ctx.send("The bot is not connected to a voice channel.")
+
+@bot.command(name='stop', help='Stops the song')
+async def stop(ctx):
+    voice_client = ctx.message.guild.voice_client
+    if voice_client.is_playing():
+        await voice_client.stop()
+    else:
+        await ctx.send("The bot is not playing anything at the moment.")
+
 @bot.command(name="ping")
 @commands.cooldown(1, 1,commands.BucketType.user)
 async def ping(ctx: commands.Context):
@@ -142,15 +204,6 @@ async def help(ctx:commands.Context):
     embedVar.add_field(name="ball", value="Make life decisions!! \n syntax: \n $ball (stuff)", inline=False)
     await ctx.channel.send(embed=embedVar)
 
-@bot.command(name='join')
-@commands.cooldown(1,2,BucketType.user)
-async def join(ctx):
-    if not ctx.message.author.voice:
-        await ctx.send("{} is not connected to a voice channel".format(ctx.message.author.name))
-        return
-    else:
-        channel = ctx.message.author.voice.channel
-        await channel.connect()
 @bot.command(name="ball")
 @commands.cooldown(1,1,BucketType.user)
 async def ball(ctx, query):
@@ -158,57 +211,6 @@ async def ball(ctx, query):
     response=random.choice(ballresponse)
     await ctx.send(response)
 
-
-@bot.command(name='die')
-@commands.cooldown(1,2,BucketType.user)
-async def die(ctx):
-    voice_client = ctx.message.guild.voice_client
-    if voice_client.is_connected():
-        await voice_client.disconnect()
-    else:
-        await ctx.send("The bot is not connected to a voice channel.")
-
-@bot.command(name='play', help='To play song')
-@commands.cooldown(1,1,BucketType.user)
-async def play(ctx,url):
-    try :
-        server = ctx.message.guild
-        voice_channel = server.voice_client
-
-        async with ctx.typing():
-            filename = await YTDLSource.from_url(url, loop=bot.loop)
-            voice_channel.play(discord.FFmpegPCMAudio(executable="ffmpeg.exe", source=filename))
-        await ctx.send('**Now playing:** {}'.format(filename))
-    except:
-        await ctx.send("The bot is not connected to a voice channel.")
-
-
-@bot.command(name='pause', help='This command pauses the song')
-@commands.cooldown(1,1,BucketType.user)
-async def pause(ctx):
-    voice_client = ctx.message.guild.voice_client
-    if voice_client.is_playing():
-        await voice_client.pause()
-    else:
-        await ctx.send("The bot is not playing anything at the moment.")
-    
-@bot.command(name='resume', help='Resumes the song')
-@commands.cooldown(1,1,BucketType.user)
-async def resume(ctx):
-    voice_client = ctx.message.guild.voice_client
-    if voice_client.is_paused():
-        await voice_client.resume()
-    else:
-        await ctx.send("The bot was not playing anything before this. Use play_song command")
-
-@bot.command(name='stop', help='Stops the song')
-@commands.cooldown(1,3,BucketType.user)
-async def stop(ctx):
-    voice_client = ctx.message.guild.voice_client
-    if voice_client.is_playing():
-        await voice_client.stop()
-    else:
-        await ctx.send("The bot is not playing anything at the moment.")
 @bot.command(name="query")
 @commands.cooldown(1,1,BucketType.user)
 async def query(ctx):
