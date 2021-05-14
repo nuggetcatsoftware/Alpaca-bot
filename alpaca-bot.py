@@ -139,6 +139,7 @@ async def help(ctx:commands.Context):
     embedVar.add_field(name="music", value="Play music. \n syntax: \n 1. Join vc ($join) \n 2. Leave vc ($die) \n 3. Play song ($song (url)) \n 4. Pause ($pause) \n 5. Resume ($resume) \n 6. Stop ($stop)", inline=False)
     embedVar.add_field(name="query", value="For users who question their existence. \n syntax: \n $query", inline=False)
     embedVar.add_field(name="about", value="Know more about Alpaca and his developer!", inline=False)
+    embedVar.add_field(name="ball", value="Make life decisions!! \n syntax: \n $ball (stuff)", inline=False)
     await ctx.channel.send(embed=embedVar)
 @bot.command(name="youtube")
 @commands.cooldown(1,1,BucketType.user)
