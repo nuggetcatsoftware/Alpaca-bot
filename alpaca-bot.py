@@ -56,6 +56,11 @@ ballresponse=[
     "Likely",
     "That's not gonna happen"
 ]
+alpaca_happy=[
+    "Pwaaa! :)",
+    "PWaaaat!",
+    "Pwaa ~~ :heart: "
+]
 file=open("token.txt","r")
 lines=file.readlines()
 TOKEN=lines[0]
@@ -83,8 +88,6 @@ async def on_member_join(member):
     embedVar.add_field(name="Let's get started!", value="Type: (@help) to get started!!", inline=False)
     await member.dm_channel.send(f'Hi {member.name}')
     await member.dn_channel.send(embed=embedVar)
-
-
 
 @bot.command(name="ping")
 @commands.cooldown(1, 1,commands.BucketType.user)
@@ -188,6 +191,22 @@ async def issue(ctx:commands.Context):
     embedVar.add_field(name="Alpaca bot", value="https://github.com/nuggetcatsoftware/Alpaca-bot/issues", inline=False)
     embedVar.add_field(name="Operation Yellowbird", value="https://github.com/nuggetcatsoftware/Operation-Yellowbird/issues", inline=False)
     await ctx.channel.send(embed=embedVar)
+@bot.command(name="repeat")
+@commands.cooldown(1,1,commands.BucketType.user)
+async def repeat(ctx, repeater):
+    print(repeater)
+    if repeater.lower() =="i am stupid":
+        await ctx.channel.send("We know")
+    elif repeater.lower() =="im stupid":
+        await ctx.channel.send("We know")
+    elif repeater.lower() =="i'm stupid":
+        await ctx.channel.send("We know")
+    elif repeater.lower() =="im gay":
+        await ctx.channel.send("We know")
+    elif repeater.lower() =="i'm gay":
+        await ctx.channel.send("We know")
+    elif repeater.lower() =="i am gay":
+        await ctx.channel.send("We know")
 @bot.command(name="weather")
 @commands.cooldown(1, 10,commands.BucketType.user)
 async def weather(ctx, city):
@@ -248,7 +267,8 @@ async def on_message(message):
         await message.channel.send('Ma!')
         await bot.process_commands(message)
     elif "pwa" in message.content.lower():
-        await message.channel.send('Pwaaaa! :)')
+        response=random.choice(alpaca_happy)
+        await message.channel.send(response)
         await bot.process_commands(message)      
     elif "alpaca" in message.content.lower():
         response=random.choice(alpaca_noises)
@@ -275,7 +295,7 @@ async def on_message(message):
     elif "dick" in message.content.lower():
         await message.channel.send("Pussy")
         await bot.process_commands(message)
-    elif "China" in message.content.lower():
+    elif "china" in message.content.lower():
         await message.channel.send("Wuhanhanhanhan")
         await bot.process_commands(message)
     elif "good" in message.content.lower():
@@ -289,7 +309,12 @@ async def on_message(message):
     elif "sad" in message.content.lower():
         await message.channel.send("Sadge")
         await bot.process_commands(message)
-
+    elif "fuck" in message.content.lower():
+        await message.channel.send("shit")
+        await bot.process_commands(message)
+    elif "happy" in message.content.lower():
+        await message.channel.send("IKR, things are simple when you're happy")
+        await bot.process_commands(message)
 
 @bot.event
 async def on_command_error(ctx, error):
