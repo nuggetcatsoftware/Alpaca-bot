@@ -141,17 +141,7 @@ async def help(ctx:commands.Context):
     embedVar.add_field(name="about", value="Know more about Alpaca and his developer!", inline=False)
     embedVar.add_field(name="ball", value="Make life decisions!! \n syntax: \n $ball (stuff)", inline=False)
     await ctx.channel.send(embed=embedVar)
-@bot.command(name="youtube")
-@commands.cooldown(1,1,BucketType.user)
-async def youtube(ctx, search):
-    query_string = parse.urlencode({'search_query': search})
-    html_content = request.urlopen('http://www.youtube.com/results?' + query_string)
-    # print(html_content.read().decode())
-    search_results = re.findall('href=\"\\/watch\\?v=(.{11})', html_content.read().decode())
-    print(search_results)
-    await ctx.send(search_results)
-    # I will put just the first result, you can loop the response to show more results
-    await ctx.send('https://www.youtube.com/watch?v=' + search_results[0])
+
 @bot.command(name='join')
 @commands.cooldown(1,2,BucketType.user)
 async def join(ctx):
