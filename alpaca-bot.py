@@ -166,7 +166,7 @@ async def resume(ctx):
     
 
 
-@bot.command(name='leave', help='To make the bot leave the voice channel')
+@bot.command(name='die', help='To make the bot leave the voice channel')
 async def leave(ctx):
     voice_client = ctx.message.guild.voice_client
     if voice_client.is_connected():
