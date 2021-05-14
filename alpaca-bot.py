@@ -166,22 +166,7 @@ async def ball(ctx, query):
     print(query)
     response=random.choice(ballresponse)
     await ctx.send(response)
-@bot.command(name="harass")
-@commands.cooldown(1,10,BucketType.user)
-async def harass(ctx, pingtarget, pingping):
-    if pingping >30:
-        await ctx.send("Dude that's an overkill don't try to kill the server")
-    elif pingping<0:
-        await ctx.send("what are you thinking tbh?")
-    elif pingping==0:
-        await ctx.send("Bruh")
-    else:
-        print(pingtarget)
-        while pingping>0:
-            await ctx.send("Hi {}".format.pingtarget.mention)
-            pingping=pingping-1
-        else:
-            return
+
 
 @bot.command(name='die')
 @commands.cooldown(1,2,BucketType.user)
