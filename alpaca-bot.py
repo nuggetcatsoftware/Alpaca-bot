@@ -17,6 +17,8 @@ import os
 import youtube_dl
 import asyncio
 import re
+from mcstatus import MinecraftServer
+
 try:
     from googlesearch import search
 except ImportError:
@@ -183,6 +185,7 @@ async def urban(ctx,query,count = 1):
         await ctx.send(entries[item_id].text)
     else:
         await ctx.send("No result.")
+
 @bot.command(name="issue")
 @commands.cooldown(1,3, commands.BucketType.user)
 async def issue(ctx:commands.Context):
@@ -317,23 +320,7 @@ async def on_message(message):
     elif "happy" in message.content.lower():
         await message.channel.send("IKR, things are simple when you're happy")
         await bot.process_commands(message)
-    elif "pls rob" in message.content.lower():
-        await message.channel.send("Thats not very nice{}".format(message.author.mention))
-        await message.channel.send("Thats not very nice{}".format(message.author.mention))
-        await message.channel.send("Thats not very nice{}".format(message.author.mention))
-        await message.channel.send("Thats not very nice{}".format(message.author.mention))
-        await message.channel.send("Thats not very nice{}".format(message.author.mention))
-        await message.channel.send("Thats not very nice{}".format(message.author.mention))
-        await message.channel.send("Thats not very nice{}".format(message.author.mention))
-        await message.channel.send("Thats not very nice{}".format(message.author.mention))
-        await message.channel.send("Thats not very nice{}".format(message.author.mention))
-        await message.channel.send("Thats not very nice{}".format(message.author.mention))
-        await message.channel.send("Thats not very nice{}".format(message.author.mention))
-        await message.channel.send("Thats not very nice{}".format(message.author.mention))
-        await message.channel.send("Thats not very nice{}".format(message.author.mention))
-        await message.channel.send("Thats not very nice{}".format(message.author.mention))
-        await message.channel.send("Thats not very nice{}".format(message.author.mention))
-        await bot.process_commands(message)
+
 
 @bot.event
 async def on_command_error(ctx, error):
