@@ -185,9 +185,9 @@ async def urban(ctx,query,count = 1):
         await ctx.send(entries[item_id].text)
     else:
         await ctx.send("No result.")
-@commands.command(name="gif")
+@commands.command(name="gifs")
 @commands.cooldown(1, 3, commands.BucketType.user)
-async def gifs(ctx, *, giftag):
+async def gifs(ctx,  giftag):
     getgifurl = t.random(str(giftag))
     await ctx.send(f'{getgifurl}')
     
