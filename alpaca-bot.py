@@ -188,9 +188,9 @@ async def urban(ctx,query,count = 1):
         await ctx.send("No result.")
 @commands.command(name="gifs")
 @commands.cooldown(1, 3, commands.BucketType.user)
-async def gifs(ctx,  giftag):
+async def gifs(ctx, giftag):
     getgifurl = t.random(str(giftag))
-    await ctx.send(f'{getgifurl}')
+    await ctx.send(getgifurl)
     
 @gifs.error
 async def tenor_error(ctx, error):
