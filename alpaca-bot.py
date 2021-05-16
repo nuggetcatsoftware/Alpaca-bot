@@ -63,6 +63,7 @@ alpaca_happy=[
     "PWaaaat!",
     "Pwaa ~~ :heart: "
 ]
+t = TenGiphPy.Tenor(token="QKTF66N1775V")
 file=open("token.txt","r")
 lines=file.readlines()
 TOKEN=lines[0]
@@ -185,7 +186,27 @@ async def urban(ctx,query,count = 1):
         await ctx.send(entries[item_id].text)
     else:
         await ctx.send("No result.")
+@commands.command(name="tenor")
+async def tenor(ctx, *, giftag):
+    """This command will return a tenor gif if you type "!tenor cat" as example."""
+    getgifurl = t.random(str(giftag))
+    await ctx.send(f'{getgifurl}')
+    
+@tenor.error
+async def tenor_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send('what gif you want dude?')
+    else:
+      raise error
 
+
+@bot.command(name="daily")
+@commands.cooldown(1, 86400, commands.BucketType.user)
+async def daily(ctx:commands.Context):
+    apikey="QKTF66N1775V"
+    search_term="alpaca"
+    lmt=1
+    r = requests.get("https://api.tenor.com/v1/anonid?key=%s" % apikey)
 @bot.command(name="issue")
 @commands.cooldown(1,3, commands.BucketType.user)
 async def issue(ctx:commands.Context):
