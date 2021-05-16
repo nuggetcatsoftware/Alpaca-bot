@@ -17,8 +17,7 @@ import os
 import youtube_dl
 import asyncio
 import re
-from mcstatus import MinecraftServer
-
+import TenGiphPy
 try:
     from googlesearch import search
 except ImportError:
