@@ -202,10 +202,9 @@ async def tenor_error(ctx, error):
 @bot.command(name="daily")
 @commands.cooldown(1, 86400, commands.BucketType.user)
 async def daily(ctx:commands.Context):
-    apikey="QKTF66N1775V"
-    search_term="alpaca"
-    lmt=1
-    r = requests.get("https://api.tenor.com/v1/anonid?key=%s" % apikey)
+    giftag="alpaca"
+    getgifurl = t.random(str(giftag))
+    await ctx.send(f'{getgifurl}')
 @bot.command(name="issue")
 @commands.cooldown(1,3, commands.BucketType.user)
 async def issue(ctx:commands.Context):
