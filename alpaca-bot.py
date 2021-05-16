@@ -111,6 +111,7 @@ async def help(ctx:commands.Context):
     embedVar.add_field(name="query", value="For users who question their existence. \n syntax: \n $query", inline=False)
     embedVar.add_field(name="about", value="Know more about Alpaca and his developer!", inline=False)
     embedVar.add_field(name="ball", value="Make life decisions!! \n syntax: \n $ball (stuff)", inline=False)
+    embedVar.add_field(name="daily", value="Claim your daily dose of alpacas! \n Syntax: \n $daily",inline=False)
     await ctx.channel.send(embed=embedVar)
 
 @bot.command(name="ball")
