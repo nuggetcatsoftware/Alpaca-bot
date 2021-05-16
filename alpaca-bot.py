@@ -188,7 +188,6 @@ async def urban(ctx,query,count = 1):
         await ctx.send("No result.")
 @commands.command(name="tenor")
 async def tenor(ctx, *, giftag):
-    """This command will return a tenor gif if you type "!tenor cat" as example."""
     getgifurl = t.random(str(giftag))
     await ctx.send(f'{getgifurl}')
     
