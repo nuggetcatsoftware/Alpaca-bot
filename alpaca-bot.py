@@ -103,7 +103,6 @@ async def help(ctx:commands.Context):
     embedVar.add_field(name="Updates", value="Function: Check recent updates\n Syntax: \n $update", inline=False)
     embedVar.add_field(name="Weather", value="Check your local weather with this awesome command! \nSyntax: \n $weather(city)", inline=False)
     embedVar.add_field(name="Ping", value="Check current ping \n Syntax: \n $ping", inline=False)
-    embedVar.add_field(name="youtube", value="Search youtube \n Syntax: \n $youtube (item)", inline=False)
     embedVar.add_field(name="Source code", value="Check the source code \n Syntax: \n $source", inline=False)
     embedVar.add_field(name="Issues", value="Get the links to report an issue regarding any projects on NuggetCat. \n Syntax: \n $issue", inline=False)
     embedVar.add_field(name="music", value="Play music. \n syntax: \n 1. Join vc ($join) \n 2. Leave vc ($die) \n 3. Play song ($song (url)) \n 4. Pause ($pause) \n 5. Resume ($resume) \n 6. Stop ($stop)", inline=False)
