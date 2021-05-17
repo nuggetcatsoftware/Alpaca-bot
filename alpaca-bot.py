@@ -116,11 +116,16 @@ async def help(ctx:commands.Context):
 @commands.cooldown(1,30,BucketType.user)
 async def harrass(ctx, user: discord.User, num: int):
     if num > 31:
-        await ctx.send("m8 you need a bo'oh o' wo'er m8 innit? calm tf down")
-    await ctx.send(f'Started pinging {user.name} {num} times.')
-    for i in range(num):
-        await ctx.channel.send(user.mention)
-    await ctx.send(f'Finished {num} pings for {user.name}')
+        embedVar=discord.Embed(title="Chill")
+        embedVar.add_field(name="Bruh", value="m8 you need a bo'oh o' wo'er m8 innit? calm tf down", inline=False)
+        embedVar.add_field(name="But", value="Premium users get more harrassment")
+        await ctx.channel.send(embed=embedVar)
+        return
+    else:
+        await ctx.send(f'Started pinging {user.name} {num} times.')
+        for i in range(num):
+            await ctx.channel.send(user.mention)
+        await ctx.send(f'Finished {num} pings for {user.name}')
 @bot.command(name="ball")
 @commands.cooldown(1,1,BucketType.user)
 async def ball(ctx, query):
