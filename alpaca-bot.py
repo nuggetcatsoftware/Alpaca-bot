@@ -122,9 +122,9 @@ async def harrass(ctx, user: discord.User, num: int):
         await ctx.channel.send(embed=embedVar)
         return
     else:
-        await ctx.send(f'Started pinging {user.name} {num} times.', delete_after=60)
+        await ctx.send(f'Started pinging {user.name} {num} times.', delete_after=0.1)
         for i in range(num):
-            await ctx.channel.send(user.mention)
+            await ctx.channel.send(user.mention, delete_after=0.1)
         await ctx.send(f'Finished {num} pings for {user.name}', delete_after=0.1)
 @bot.command(name="ball")
 @commands.cooldown(1,1,BucketType.user)
