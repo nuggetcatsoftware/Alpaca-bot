@@ -33,7 +33,6 @@ alpaca_noises=[
     "pwaaaaaat!",
     "screw you",
     "Shut up im playing minecraft",
-    "imagine playing valorant, when you can make your own game"
 ]
 goodresponse=[
     "nice",
@@ -339,6 +338,16 @@ async def on_message(message):
         await bot.process_commands(message)
     elif "happy" in message.content.lower():
         await message.channel.send("IKR, things are simple when you're happy")
+        await bot.process_commands(message)
+    elif "jas" in message.content.lower():
+        pon=[
+            "poooooon",
+            "pooon",
+            "poooooooooooooooon",
+            "poooooooooooooooooooooooooooooooooooooooooooon"
+        ]
+        response=random.choice(pon)
+        await message.channel.send(response)
         await bot.process_commands(message)
 
 
