@@ -349,7 +349,16 @@ async def on_message(message):
         response=random.choice(pon)
         await message.channel.send(response)
         await bot.process_commands(message)
-
+    elif "jason" in message.content.lower():
+        pon=[
+            "poooooon",
+            "pooon",
+            "poooooooooooooooon",
+            "poooooooooooooooooooooooooooooooooooooooooooon"
+        ]
+        response=random.choice(pon)
+        await message.channel.send(response)
+        await bot.process_commands(message)
 
 @bot.event
 async def on_command_error(ctx, error):
