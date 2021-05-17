@@ -112,12 +112,14 @@ async def help(ctx:commands.Context):
     embedVar.add_field(name="ball", value="Make life decisions!! \n syntax: \n $ball (stuff)", inline=False)
     embedVar.add_field(name="daily", value="Claim your daily dose of alpacas! \n Syntax: \n $daily",inline=False)
     await ctx.channel.send(embed=embedVar)
-@bot.comand(name="harrass")
+@bot.command(name="harrass")
 @commands.cooldown(1,30,BucketType.user)
 async def harrass(ctx, user: discord.User, num: int):
+    if num > 31:
+        await ctx.send("m8 you need a bo'oh o' wo'er m8 innit? calm tf down")
     await ctx.send(f'Started pinging {user.name} {num} times.')
     for i in range(num):
-        await user.send(f'<@{str(user)}>')
+        await ctx.channel.send(user.mention)
     await ctx.send(f'Finished {num} pings for {user.name}')
 @bot.command(name="ball")
 @commands.cooldown(1,1,BucketType.user)
