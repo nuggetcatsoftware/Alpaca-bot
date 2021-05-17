@@ -199,9 +199,9 @@ async def tenor_error(ctx, error):
       raise error
 
 
-@bot.command(name="daily")
-@commands.cooldown(1, 86400, commands.BucketType.user)
-async def daily(ctx:commands.Context):
+@bot.command(name="hourly")
+@commands.cooldown(1, 3600, commands.BucketType.user)
+async def hourly(ctx:commands.Context):
     giftag="alpaca"
     getgifurl = t.random(str(giftag))
     await ctx.send(f'{getgifurl}')
