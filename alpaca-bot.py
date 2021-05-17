@@ -164,6 +164,23 @@ async def query(ctx):
 async def about(ctx):
     text = "Hi, I am Alpaca, im very smart!"
     await ctx.send(text)
+@bot.command(name='join')
+@commands.cooldown(1,2,BucketType.user)
+async def join(ctx):
+    if not ctx.message.author.voice:
+        await ctx.send("{} is not connected to a voice channel".format(ctx.message.author.name))
+        return
+    else:
+        channel = ctx.message.author.voice.channel
+        await channel.connect()
+@bot.command(name='die')
+@commands.cooldown(1,2,BucketType.user)
+async def die(ctx):
+    voice_client = ctx.message.guild.voice_client
+    if voice_client.is_connected():
+        await voice_client.disconnect()
+    else:
+        await ctx.send("The bot is not connected to a voice channel.")
 @bot.command(name="update")
 @commands.cooldown(1,1,commands.BucketType.user)
 async def update(ctx:commands.Context):
@@ -343,11 +360,14 @@ async def on_message(message):
     elif "sad" in message.content.lower():
         await message.channel.send("Sadge")
         await bot.process_commands(message)
-    elif "fuck" in message.content.lower():
-        await message.channel.send("shit")
+    elif "fuck you" in message.content.lower():
+        await message.channel.send("Fuck you too")
         await bot.process_commands(message)
     elif "happy" in message.content.lower():
         await message.channel.send("IKR, things are simple when you're happy")
+        await bot.process_commands(message)
+    elif "cara" in message.content.lower():
+        await message.channel.send("Neptune")
         await bot.process_commands(message)
     elif "jas" in message.content.lower():
         pon=[
