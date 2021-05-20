@@ -111,7 +111,7 @@ async def help(ctx:commands.Context):
     embedVar.add_field(name="ball", value="Make life decisions!! \n syntax: \n $ball (stuff)", inline=False)
     embedVar.add_field(name="daily", value="Claim your daily dose of alpacas! \n Syntax: \n $daily",inline=False)
     await ctx.channel.send(embed=embedVar)
-@bot.command(name="harrass")
+@bot.command(name="harass")
 @commands.cooldown(1,30,BucketType.user)
 async def harrass(ctx, user: discord.User, num: int):
     if num > 31:
