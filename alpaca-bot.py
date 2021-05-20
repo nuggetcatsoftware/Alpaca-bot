@@ -120,11 +120,12 @@ async def harass(ctx, user: discord.User, num: int):
             for i in range(num):
                 await ctx.channel.send(user.mention, delete_after=0.1)
             await ctx.send(f'Finished {num} pings for {user.name}', delete_after=0.1)
-        embedVar=discord.Embed(title="Chill")
-        embedVar.add_field(name="Bruh", value="m8 you need a bo'oh o' wo'er m8 innit? calm tf down", inline=False)
-        embedVar.add_field(name="But", value="Premium users get more harrassment")
-        await ctx.channel.send(embed=embedVar)
-        return
+        else:
+            embedVar=discord.Embed(title="Chill")
+            embedVar.add_field(name="Bruh", value="m8 you need a bo'oh o' wo'er m8 innit? calm tf down", inline=False)
+            embedVar.add_field(name="But", value="Premium users get more harrassment")
+            await ctx.channel.send(embed=embedVar)
+            return
     else:
         await ctx.send(f'Started pinging {user.name} {num} times.', delete_after=0.1)
         for i in range(num):
