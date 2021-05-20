@@ -109,11 +109,11 @@ async def help(ctx:commands.Context):
     embedVar.add_field(name="query", value="For users who question their existence. \n syntax: \n $query", inline=False)
     embedVar.add_field(name="about", value="Know more about Alpaca and his developer!", inline=False)
     embedVar.add_field(name="ball", value="Make life decisions!! \n syntax: \n $ball (stuff)", inline=False)
-    embedVar.add_field(name="daily", value="Claim your daily dose of alpacas! \n Syntax: \n $daily",inline=False)
+    embedVar.add_field(name="daily", value="Claim your hourly dose of alpacas! \n Syntax: \n $hourly",inline=False)
     await ctx.channel.send(embed=embedVar)
 @bot.command(name="harass")
 @commands.cooldown(1,30,BucketType.user)
-async def harrass(ctx, user: discord.User, num: int):
+async def harass(ctx, user: discord.User, num: int):
     if num > 31:
         embedVar=discord.Embed(title="Chill")
         embedVar.add_field(name="Bruh", value="m8 you need a bo'oh o' wo'er m8 innit? calm tf down", inline=False)
