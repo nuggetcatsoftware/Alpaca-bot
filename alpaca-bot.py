@@ -372,6 +372,12 @@ async def on_message(message):
     elif "happy" in message.content.lower():
         await message.channel.send("IKR, things are simple when you're happy")
         await bot.process_commands(message)
+    elif "no u" in message.content.lower():
+        await message.channel.send("no u ")
+        await bot.process_commands(message)
+    elif "no you" in message.content.lower():
+        await message.channel.send("no u ")
+        await bot.process_commands(message)
     elif "cara" in message.content.lower():
         await message.channel.send("Neptune")
         await bot.process_commands(message)
