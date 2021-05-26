@@ -264,6 +264,9 @@ async def repeat(ctx, repeater):
         await ctx.channel.send("We know")
     else:
         await ctx.channel.send(repeater)
+@bot.command(name="money")
+async def money(ctx:commands.Context):
+    await ctx.send(f"pls give {}".format(ctx.author.mention))
 @bot.command(name="weather")
 @commands.cooldown(1, 10,commands.BucketType.user)
 async def weather(ctx, city):
