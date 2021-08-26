@@ -1,0 +1,24 @@
+    @commands.command(name='spotify', description = config.HELP_SPOTIFY_LONG, help = config.HELP_SPOTIFY_SHORT)
+    async def _spotify(self, ctx,  *, nick_name=None):
+        current_guild = utils.get_guild(self.bot, ctx.message)
+        if current_guild is None:
+            await utils.send_message(ctx, config.NO_GUILD_MESSAGE)
+            return
+
+        spotify_member = None
+        if not nick_name or nick_name.isspace():
+            spotify_member = ctx.message.author
+
+        else:
+            for channel in current_guild.voice_channels:
+                for member in channel.members:
+                    if member.nick == nick_name or (member.nick is None and member.name == nick_name):
+                        spotify_member = member
+
+        if spotify_member is None:
+            return
+        if spotify_member.activity.name != "Spotify":
+            return
+        song = spotify_member.activity.title + " " + spotify_member.activity.artist
+
+        await utils.guild_to_audiocontroller[current_guild].add_song(song)
