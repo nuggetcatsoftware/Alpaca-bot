@@ -61,6 +61,11 @@ alpaca_happy=[
     "PWaaaat!",
     "Pwaa ~~ :heart: "
 ]
+iam=[
+    "im",
+    "i am",
+    "i'm"
+]
 t = TenGiphPy.Tenor(token="QKTF66N1775V")
 file=open("token.txt","r")
 lines=file.readlines()
@@ -72,8 +77,8 @@ async def on_ready():
     for guild in bot.guilds:
         for channel in guild.text_channels :
             if str(channel) == "general" :
-                await channel.send("I'm BACK!Pwaaaa!")
-                await channel.send(file=discord.File('happyalpaca.gif'))
+                await guild.me.edit(nick="Alpaca")
+                await channel.send("Alpaca online!")
         print('Active in {}\n Member Count : {}'.format(guild.name,guild.member_count))
     print(f'{bot.user.name} has connected to discord and is now online')
     print("Connection time: \n")
@@ -105,11 +110,12 @@ async def help(ctx:commands.Context):
     embedVar.add_field(name="Ping", value="Check current ping \n Syntax: \n $ping", inline=False)
     embedVar.add_field(name="Source code", value="Check the source code \n Syntax: \n $source", inline=False)
     embedVar.add_field(name="Issues", value="Get the links to report an issue regarding any projects on NuggetCat. \n Syntax: \n $issue", inline=False)
-    embedVar.add_field(name="music", value="Play music. \n syntax: \n 1. Join vc ($join) \n 2. Leave vc ($die) \n 3. Play song ($song (url)) \n 4. Pause ($pause) \n 5. Resume ($resume) \n 6. Stop ($stop)", inline=False)
     embedVar.add_field(name="query", value="For users who question their existence. \n syntax: \n $query", inline=False)
     embedVar.add_field(name="about", value="Know more about Alpaca and his developer!", inline=False)
     embedVar.add_field(name="ball", value="Make life decisions!! \n syntax: \n $ball (stuff)", inline=False)
-    embedVar.add_field(name="daily", value="Claim your hourly dose of alpacas! \n Syntax: \n $hourly",inline=False)
+    embedVar.add_field(name="hourly", value="Claim your hourly dose of alpacas! \n Syntax: \n $hourly",inline=False)
+    #music
+    embedVar.add_field(name="Music", value="work in progress", inline=False)
     await ctx.channel.send(embed=embedVar)
 @bot.command(name="harass")
 @commands.cooldown(1,30,BucketType.user)
@@ -218,12 +224,11 @@ async def urban(ctx,query,count = 1):
         await ctx.send(entries[item_id].text)
     else:
         await ctx.send("No result.")
-@commands.command(name="gifs")
+@bot.command(name="gifs")
 @commands.cooldown(1, 3, commands.BucketType.user)
 async def gifs(ctx, giftag):
     getgifurl = t.random(str(giftag))
     await ctx.send(getgifurl)
-    
 @gifs.error
 async def tenor_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
@@ -246,24 +251,8 @@ async def issue(ctx:commands.Context):
     embedVar.add_field(name="Alpaca bot", value="https://github.com/nuggetcatsoftware/Alpaca-bot/issues", inline=False)
     embedVar.add_field(name="Operation Yellowbird", value="https://github.com/nuggetcatsoftware/Operation-Yellowbird/issues", inline=False)
     await ctx.channel.send(embed=embedVar)
-@bot.command(name="repeat")
-@commands.cooldown(1,1,commands.BucketType.user)
-async def repeat(ctx, repeater):
-    print(repeater)
-    if repeater.lower() =="i am stupid":
-        await ctx.channel.send("We know")
-    elif repeater.lower() =="im stupid":
-        await ctx.channel.send("We know")
-    elif repeater.lower() =="i'm stupid":
-        await ctx.channel.send("We know")
-    elif repeater.lower() =="im gay":
-        await ctx.channel.send("We know")
-    elif repeater.lower() =="i'm gay":
-        await ctx.channel.send("We know")
-    elif repeater.lower() =="i am gay":
-        await ctx.channel.send("We know")
-    else:
-        await ctx.channel.send(repeater)
+#this dog shit here is for trolling dankmemer
+
 @bot.command(name="money")
 async def money(ctx:commands.Context):
     await ctx.channel.send("pls give {} all").format(ctx.message.author.mention)
@@ -352,6 +341,9 @@ async def on_message(message):
     elif "valorant" in message.content.lower():
         await message.channel.send("Imagine playing Valorant when you can make your own game -Alpaca")
         await bot.process_commands(message)
+    elif "groovy" in message.content.lower():
+        await message.channel.send("Groovy was killed by the capitalist Youtube, may we all have Fs in the chat for the death of Groovy. -Alpaca")
+        await bot.process_commands(message)
     elif "dick" in message.content.lower():
         await message.channel.send("Pussy")
         await bot.process_commands(message)
@@ -369,6 +361,9 @@ async def on_message(message):
     elif "sad" in message.content.lower():
         await message.channel.send("Sadge")
         await bot.process_commands(message)
+    elif "janice" in message.content.lower():
+        await message.channel.send("Neptune?")
+        await bot.process_commands(message)
     elif "fuck you" in message.content.lower():
         await message.channel.send("Fuck you too")
         await bot.process_commands(message)
@@ -381,6 +376,22 @@ async def on_message(message):
     elif "no you" in message.content.lower():
         await message.channel.send("no u ")
         await bot.process_commands(message)
+    elif "i am" in message.content.lower():
+        input=message.content.lower()
+        input =input.replace("i am", "")
+        await message.channel.send("Hi" + input + " I'm Alpaca")
+    elif "im" in message.content.lower():
+        input=message.content.lower()
+        input =input.replace("im", "")
+        await message.channel.send("Hi" + input + " I'm Alpaca")
+    elif "iam" in message.content.lower():
+        input=message.content.lower()
+        input =input.replace("iam", "")
+        await message.channel.send("Hi" + input + " I'm Alpaca")
+    elif "i'm" in message.content.lower():
+        input=message.content.lower()
+        input =input.replace("i'm", "")
+        await message.channel.send("Hi" + input + " I'm Alpaca")
     elif "cara" in message.content.lower():
         await message.channel.send("Neptune")
         await bot.process_commands(message)
