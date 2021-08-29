@@ -26,6 +26,8 @@ from discord.ext.commands.core import command
 import youtube_dl
 import asyncio
 import validators
+from youtube_search import YoutubeSearch
+import json
 try:
     from googlesearch import search
 except ImportError:
@@ -37,7 +39,8 @@ prescense=[
     "with your wife",
     "Grand Theft Auto IRL",
     "Human simulator",
-    "OnlyAlpacas"
+    "OnlyAlpacas",
+    "Avenge Groovy"
 ]
 alpaca_noises=[
     "pwaaa!",
@@ -166,8 +169,9 @@ async def help(ctx:commands.Context):
     embedVar.add_field(name="about", value="Know more about Alpaca and his developer!", inline=False)
     embedVar.add_field(name="ball", value="Make life decisions!! \n syntax: \n $ball (stuff)", inline=False)
     embedVar.add_field(name="hourly", value="Claim your hourly dose of alpacas! \n Syntax: \n $hourly",inline=False)
+    embedVar.add_field(name="findvid", value="Find youtube videos with this command!!\n Syntax:\n $findvid (stuff you want)", inline=False)
     #music
-    embedVar.add_field(name="Music", value="work in progress", inline=False)
+    embedVar.add_field(name="Music", value="$join \n $leave \n $play\n $pause\n $resume\n $stop \n Type $help (command) to learn more about each command!! \n ie.) $help pause", inline=False)
     await ctx.channel.send(embed=embedVar)
 @bot.command(name="harass")
 @commands.cooldown(1,30,BucketType.user)
@@ -214,18 +218,36 @@ async def leave(ctx):
         await voice_client.disconnect()
     else:
         await ctx.send("The bot is not connected to a voice channel.")
-
+#link search functions
+@bot.command(name="findvid", help='find videos from youtube')
+async def findvid(ctx,keyword):
+    results = YoutubeSearch(keyword, max_results=1).to_json()
+    results_dict = json.loads(results)
+    for v in results_dict['videos']:
+        await ctx.send('https://www.youtube.com' + v['url_suffix'])
 #play song command
 @bot.command(name='play', help='To play song')
 async def play(ctx,url):
     try :
-        server = ctx.message.guild
-        voice_channel = server.voice_client
+        if not validators.url(url):
+            results = YoutubeSearch(url, max_results=1).to_json()
+            results_dict = json.loads(results)
+            for v in results_dict['videos']:
+                play_link='https://www.youtube.com' + v['url_suffix']
+                server=ctx.message.guild
+                voice_channel=server.voice_client
+                async with ctx.typing():
+                    filename = await YTDLSource.from_url(play_link, loop=bot.loop)
+                    voice_channel.play(discord.FFmpegPCMAudio(executable="ffmpeg.exe", source=filename))
+                await ctx.send('**Now playing:** {}'.format(filename))
+        else:
+            server = ctx.message.guild
+            voice_channel = server.voice_client
 
-        async with ctx.typing():
-            filename = await YTDLSource.from_url(url, loop=bot.loop)
-            voice_channel.play(discord.FFmpegPCMAudio(executable="ffmpeg.exe", source=filename))
-        await ctx.send('**Now playing:** {}'.format(filename))
+            async with ctx.typing():
+                filename = await YTDLSource.from_url(url, loop=bot.loop)
+                voice_channel.play(discord.FFmpegPCMAudio(executable="ffmpeg.exe", source=filename))
+            await ctx.send('**Now playing:** {}'.format(filename))
     except:
         await ctx.send("The bot is not connected to a voice channel.")
 
@@ -288,23 +310,7 @@ async def query(ctx):
 async def about(ctx):
     text = "Hi, I am Alpaca, im very smart!"
     await ctx.send(text)
-@bot.command(name='join')
-@commands.cooldown(1,2,BucketType.user)
-async def join(ctx):
-    if not ctx.message.author.voice:
-        await ctx.send("{} is not connected to a voice channel".format(ctx.message.author.name))
-        return
-    else:
-        channel = ctx.message.author.voice.channel
-        await channel.connect()
-@bot.command(name='die')
-@commands.cooldown(1,2,BucketType.user)
-async def die(ctx):
-    voice_client = ctx.message.guild.voice_client
-    if voice_client.is_connected():
-        await voice_client.disconnect()
-    else:
-        await ctx.send("The bot is not connected to a voice channel.")
+
 @bot.command(name="update")
 @commands.cooldown(1,1,commands.BucketType.user)
 async def update(ctx:commands.Context):

@@ -10,3 +10,6 @@ python-dotenv==0.15.0
 youtube-dl==2021.2.10
 discord.py[voice]
 TenGiphPy
+validators
+youtube_search
+json
