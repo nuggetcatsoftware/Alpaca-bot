@@ -32,6 +32,13 @@ try:
     from googlesearch import search
 except ImportError:
     print("module google not found", "Check pip installation")
+import asyncio
+#this exists to check if alpaca is making noises
+async def duration():
+    global is_playing
+    is_playing = True
+    await asyncio.sleep(duration)
+    is_playing = False
 #sub to specific bucket of events
 intents = discord.Intents().all()
 client=discord.Client(intents=intents)
@@ -171,7 +178,7 @@ async def help(ctx:commands.Context):
     embedVar.add_field(name="hourly", value="Claim your hourly dose of alpacas! \n Syntax: \n $hourly",inline=False)
     embedVar.add_field(name="findvid", value="Find youtube videos with this command!!\n Syntax:\n $findvid (stuff you want)", inline=False)
     #music
-    embedVar.add_field(name="Music", value="$join \n $leave \n $play\n $pause\n $resume\n $stop \n Type $help (command) to learn more about each command!! \n ie.) $help pause", inline=False)
+    embedVar.add_field(name="Music", value="$join \n $leave \n $play\n $pause\n $resume\n $stop ", inline=False)
     await ctx.channel.send(embed=embedVar)
 @bot.command(name="harass")
 @commands.cooldown(1,30,BucketType.user)
@@ -193,6 +200,7 @@ async def harass(ctx, user: discord.User, num: int):
         for i in range(num):
             await ctx.channel.send(user.mention, delete_after=0.1)
         await ctx.send(f'Finished {num} pings for {user.name}', delete_after=0.1)
+
 @bot.command(name="ball")
 @commands.cooldown(1,1,BucketType.user)
 async def ball(ctx, query):
@@ -494,22 +502,38 @@ async def on_message(message):
     elif "no you" in message.content.lower():
         await message.channel.send("no u ")
         await bot.process_commands(message)
-    elif "i am" in message.content.lower():
+    elif message.content.startswith("i am"):
         input=message.content.lower()
         input =input.replace("i am", "")
-        await message.channel.send("Hi" + input + " I'm Alpaca")
-    elif "im" in message.content.lower():
+        await message.channel.send("Hi " + input + " I'm Alpaca")
+    elif message.content.startswith("im"):
         input=message.content.lower()
         input =input.replace("im", "")
-        await message.channel.send("Hi" + input + " I'm Alpaca")
-    elif "iam" in message.content.lower():
+        await message.channel.send("Hi " + input + " I'm Alpaca")
+    elif message.content.startswith("iam"):
         input=message.content.lower()
         input =input.replace("iam", "")
-        await message.channel.send("Hi" + input + " I'm Alpaca")
-    elif "i'm" in message.content.lower():
+        await message.channel.send("Hi " + input + " I'm Alpaca")
+    elif message.content.startswith("i'm"):
         input=message.content.lower()
         input =input.replace("i'm", "")
-        await message.channel.send("Hi" + input + " I'm Alpaca")
+        await message.channel.send("Hi " + input + " I'm Alpaca")
+    elif message.content.startswith("I am"):
+        input=message.content.lower()
+        input =input.replace("i am", "")
+        await message.channel.send("Hi " + input + " I'm Alpaca")
+    elif message.content.startswith("Im"):
+        input=message.content.lower()
+        input =input.replace("im", "")
+        await message.channel.send("Hi " + input + " I'm Alpaca")
+    elif message.content.startswith("Iam"):
+        input=message.content.lower()
+        input =input.replace("iam", "")
+        await message.channel.send("Hi " + input + " I'm Alpaca")
+    elif message.content.startswith("I'm"):
+        input=message.content.lower()
+        input =input.replace("i'm", "")
+        await message.channel.send("Hi " + input + " I'm Alpaca")
     elif "cara" in message.content.lower():
         await message.channel.send("Neptune")
         await bot.process_commands(message)
