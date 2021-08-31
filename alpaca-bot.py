@@ -32,13 +32,7 @@ try:
     from googlesearch import search
 except ImportError:
     print("module google not found", "Check pip installation")
-import asyncio
-#this exists to check if alpaca is making noises
-async def duration():
-    global is_playing
-    is_playing = True
-    await asyncio.sleep(duration)
-    is_playing = False
+
 #sub to specific bucket of events
 intents = discord.Intents().all()
 client=discord.Client(intents=intents)
@@ -133,7 +127,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
             data = data['entries'][0]
         filename = data['title'] if stream else ytdl.prepare_filename(data)
         return filename
-
+queue=0
 @bot.event
 async def on_ready():
     for guild in bot.guilds:
@@ -178,7 +172,7 @@ async def help(ctx:commands.Context):
     embedVar.add_field(name="hourly", value="Claim your hourly dose of alpacas! \n Syntax: \n $hourly",inline=False)
     embedVar.add_field(name="findvid", value="Find youtube videos with this command!!\n Syntax:\n $findvid (stuff you want)", inline=False)
     #music
-    embedVar.add_field(name="Music", value="$join \n $leave \n $play\n $pause\n $resume\n $stop ", inline=False)
+    embedVar.add_field(name="Music", value="$join \n $leave \n $play\n $pause\n $resume\n $stop \n $now", inline=False)
     await ctx.channel.send(embed=embedVar)
 @bot.command(name="harass")
 @commands.cooldown(1,30,BucketType.user)
@@ -215,7 +209,10 @@ async def join(ctx):
         await ctx.send("{} is not connected to a voice channel".format(ctx.message.author.name))
         return
     else:
-        channel = ctx.message.author.voice.channel
+        if queue>0:
+            await ctx.send("I am playing audio please do not try break me")
+        else:
+            channel = ctx.message.author.voice.channel
     await channel.connect()
 
 #leave command
@@ -233,6 +230,7 @@ async def findvid(ctx,keyword):
     results_dict = json.loads(results)
     for v in results_dict['videos']:
         await ctx.send('https://www.youtube.com' + v['url_suffix'])
+
 #play song command
 @bot.command(name='play', help='To play song')
 async def play(ctx,url):
@@ -448,6 +446,7 @@ async def on_message(message):
     elif "alpaca" in message.content.lower():
         response=random.choice(alpaca_noises)
         await message.channel.send(response)
+        await message.add_reaction(':heart: ')
         await bot.process_commands(message)
     elif "nikita" in message.content.lower():
         await message.channel.send("Harrasspin")
