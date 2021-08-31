@@ -234,26 +234,35 @@ async def findvid(ctx,keyword):
 #play song command
 @bot.command(name='play', help='To play song')
 async def play(ctx,url):
+    async def duration():
+        global is_playing
+        is_playing = True
+        await asyncio.sleep(duration)
+        is_playing = False
     try :
-        if not validators.url(url):
-            results = YoutubeSearch(url, max_results=1).to_json()
-            results_dict = json.loads(results)
-            for v in results_dict['videos']:
-                play_link='https://www.youtube.com' + v['url_suffix']
-                server=ctx.message.guild
-                voice_channel=server.voice_client
+        asyncio.run(duration())
+        if is_playing ==False:
+            if not validators.url(url):
+                results = YoutubeSearch(url, max_results=1).to_json()
+                results_dict = json.loads(results)
+                for v in results_dict['videos']:
+                    play_link='https://www.youtube.com' + v['url_suffix']
+                    server=ctx.message.guild
+                    voice_channel=server.voice_client
+                    async with ctx.typing():
+                        filename = await YTDLSource.from_url(play_link, loop=bot.loop)
+                        voice_channel.play(discord.FFmpegPCMAudio(executable="ffmpeg.exe", source=filename))
+                    await ctx.send('**Now playing:** {}'.format(filename))
+            else:
+                server = ctx.message.guild
+                voice_channel = server.voice_client
+
                 async with ctx.typing():
-                    filename = await YTDLSource.from_url(play_link, loop=bot.loop)
+                    filename = await YTDLSource.from_url(url, loop=bot.loop)
                     voice_channel.play(discord.FFmpegPCMAudio(executable="ffmpeg.exe", source=filename))
                 await ctx.send('**Now playing:** {}'.format(filename))
         else:
-            server = ctx.message.guild
-            voice_channel = server.voice_client
-
-            async with ctx.typing():
-                filename = await YTDLSource.from_url(url, loop=bot.loop)
-                voice_channel.play(discord.FFmpegPCMAudio(executable="ffmpeg.exe", source=filename))
-            await ctx.send('**Now playing:** {}'.format(filename))
+            print("Broken")
     except:
         await ctx.send("The bot is not connected to a voice channel.")
 
