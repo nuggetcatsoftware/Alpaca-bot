@@ -86,7 +86,7 @@ file=open("token.txt","r")
 lines=file.readlines()
 TOKEN=lines[0]
 start_time = time.time()
-bot = commands.Bot(command_prefix="$")
+bot = commands.Bot(command_prefix="-")
 #using youtube_dl to download audio
 youtube_dl.utils.bug_reports_message = lambda: ''
 
@@ -230,41 +230,65 @@ async def findvid(ctx,keyword):
     results_dict = json.loads(results)
     for v in results_dict['videos']:
         await ctx.send('https://www.youtube.com' + v['url_suffix'])
-
+@bot.command(name='checkaudio')
+async def checkaudio(ctx):
+    print("CHECKAUDIO FUNCTION SUMMONED")
+    server=ctx.message.guild
+    voice_channel=server.voice_client
+    if voice_channel.is_playing():
+        print("audio is playing")
+        await ctx.send("Audio is playing debug code:1")
+    else:
+        print("something is wrong i can feel it")
+        await ctx.send("Something is wrong i can feel it")
+        await ctx.send("debug code:0")
 #play song command
 @bot.command(name='play', help='To play song')
 async def play(ctx,url):
-    async def duration():
-        global is_playing
-        is_playing = True
-        await asyncio.sleep(duration)
-        is_playing = False
-    try :
-        asyncio.run(duration())
-        if is_playing ==False:
-            if not validators.url(url):
-                results = YoutubeSearch(url, max_results=1).to_json()
-                results_dict = json.loads(results)
-                for v in results_dict['videos']:
-                    play_link='https://www.youtube.com' + v['url_suffix']
-                    server=ctx.message.guild
-                    voice_channel=server.voice_client
-                    async with ctx.typing():
-                        filename = await YTDLSource.from_url(play_link, loop=bot.loop)
-                        voice_channel.play(discord.FFmpegPCMAudio(executable="ffmpeg.exe", source=filename))
-                    await ctx.send('**Now playing:** {}'.format(filename))
-            else:
-                server = ctx.message.guild
-                voice_channel = server.voice_client
-
-                async with ctx.typing():
-                    filename = await YTDLSource.from_url(url, loop=bot.loop)
-                    voice_channel.play(discord.FFmpegPCMAudio(executable="ffmpeg.exe", source=filename))
-                await ctx.send('**Now playing:** {}'.format(filename))
+    server=ctx.message.guild
+    voice_channel=server.voice_client
+    if voice_channel.is_playing():
+        print("queue system")
+        if not validators.url(url):
+            results = YoutubeSearch(url, max_results=1).to_json()
+            results_dict = json.loads(results)
+            for v in results_dict['videos']:
+                play_link='https://www.youtube.com' + v['url_suffix']
+                serverid=ctx.message.guild.id
+                queuetext=serverid+"queue"+".txt"
+                file=open(queuetext,"w")
+                file.write(play_link)
+                file.write("\n")
+                file.close()
+                await ctx.send("Queued your song {}".format(message.author.mention))
         else:
-            print("Broken")
-    except:
-        await ctx.send("The bot is not connected to a voice channel.")
+            serverid=ctx.message.guild.id
+            queuetext=serverid+"queue"+".txt"
+            file=open(queuetext,"w")
+            file.write(url)
+            file.write("\n")
+            file.close()
+            await ctx.send("Queued your song {}".format(message.author.mention))
+    if not validators.url(url):
+        results = YoutubeSearch(url, max_results=1).to_json()
+        results_dict = json.loads(results)
+        for v in results_dict['videos']:
+            play_link='https://www.youtube.com' + v['url_suffix']
+            server=ctx.message.guild
+            voice_channel=server.voice_client
+            async with ctx.typing():
+                filename = await YTDLSource.from_url(play_link, loop=bot.loop)
+                voice_channel.play(discord.FFmpegPCMAudio(executable="ffmpeg.exe", source=filename))
+            await ctx.send('**Now playing:** {}'.format(filename))
+    else:
+        server = ctx.message.guild
+        voice_channel = server.voice_client
+
+        async with ctx.typing():
+            filename = await YTDLSource.from_url(url, loop=bot.loop)
+            voice_channel.play(discord.FFmpegPCMAudio(executable="ffmpeg.exe", source=filename))
+        await ctx.send('**Now playing:** {}'.format(filename))
+
 
 #pause command
 @bot.command(name='pause', help='This command pauses the song')
@@ -455,7 +479,6 @@ async def on_message(message):
     elif "alpaca" in message.content.lower():
         response=random.choice(alpaca_noises)
         await message.channel.send(response)
-        await message.add_reaction(':heart: ')
         await bot.process_commands(message)
     elif "nikita" in message.content.lower():
         await message.channel.send("Harrasspin")
