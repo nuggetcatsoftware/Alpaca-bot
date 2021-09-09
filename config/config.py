@@ -1,7 +1,7 @@
-BOT_TOKEN: str = "token"
-SPOTIFY_ID: str = "str"
-SPOTIFY_SECRET: str = "sec"
-
+BOT_TOKEN: str = ""
+SPOTIFY_ID: str = ""
+SPOTIFY_SECRET: str = ""
+FFMPEGPATH="ffmpeg.exe"
 BOT_PREFIX = "-"
 
 EMBED_COLOR = 0x4dd4d0  #replace after'0x' with desired hex code ex. '#ff0188' >> '0xff0188'

@@ -4,3 +4,6 @@ aiohttp
 asyncio
 beautifulsoup4
 spotipy
+wikipedia
+TenGiphPy
+discord.py

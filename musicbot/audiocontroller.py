@@ -94,7 +94,7 @@ class AudioController(object):
         self.playlist.playhistory.append(self.current_song)
 
         self.voice_client.play(discord.FFmpegPCMAudio(
-            song.base_url, before_options='-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5'), after=lambda e: self.next_song(e))
+            song.base_url, executable=config.FFMPEGPATH, before_options='-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5'), after=lambda e: self.next_song(e))
 
         self.voice_client.source = discord.PCMVolumeTransformer(
             self.guild.voice_client.source)

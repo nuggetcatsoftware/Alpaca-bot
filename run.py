@@ -10,10 +10,11 @@ from musicbot import utils
 from musicbot.utils import guild_to_audiocontroller, guild_to_settings
 
 from musicbot.commands.general import General
-
+from musicbot.commands.others import Others
+from musicbot.commands.uno import Uno
 
 initial_extensions = ['musicbot.commands.music',
-                    'musicbot.commands.general', 'musicbot.plugins.button']
+                    'musicbot.commands.general', 'musicbot.plugins.button',"musicbot.commands.others", "musicbot.commands.uno"]
 bot = commands.Bot(command_prefix=config.BOT_PREFIX, pm_help=True, case_insensitive=True)
 
 

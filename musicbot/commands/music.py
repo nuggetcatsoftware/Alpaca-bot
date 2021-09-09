@@ -1,8 +1,6 @@
 import discord
 from discord.ext import commands
-
 import asyncio
-
 from musicbot import utils
 from musicbot import linkutils
 from config import config
@@ -24,7 +22,6 @@ class Music(commands.Cog):
 
     @commands.command(name='play', description=config.HELP_YT_LONG, help=config.HELP_YT_SHORT, aliases=['p', 'yt', 'pl'])
     async def _play_song(self, ctx, *, track: str):
-
         if(await utils.is_connected(ctx) == None):
             await General.uconnect(self, ctx)
         if track.isspace() or not track:
