@@ -88,26 +88,6 @@ class Others(commands.Cog):
         else:
             await ctx.send(" City Not Found ")
     
-    @commands.command(name="harass", description="harass someone with this command!!", help="-harass @someone (no. of times) to harass a person")
-    async def _harass(self, ctx,*, user: discord.User, num: int):
-        if num > 31:
-            if ctx.message.author.id=="394049095544733706":
-                await ctx.send(f'Started pinging {user.name} {num} times.', delete_after=0.1)
-                for i in range(num):
-                    await ctx.channel.send(user.mention, delete_after=0.1)
-                await ctx.send(f'Finished {num} pings for {user.name}', delete_after=0.1)
-            else:
-                embedVar=discord.Embed(title="Chill")
-                embedVar.add_field(name="Bruh", value="m8 you need a bo'oh o' wo'er m8 innit? calm tf down", inline=False)
-                embedVar.add_field(name="But", value="Premium users get more harrassment")
-                await ctx.channel.send(embed=embedVar)
-                return
-        else:
-            await ctx.send(f'Started pinging {user.name} {num} times.', delete_after=0.1)
-            for i in range(num):
-                await ctx.channel.send(user.mention, delete_after=0.1)
-            await ctx.send(f'Finished {num} pings for {user.name}', delete_after=0.1)
-
     @commands.command(name="ball",description="Make life decisions with 8ball!!", help="-ball (your question), to generate wisdom")
     async def _ball(self,ctx, *, query:str):
         ballresponse=[
