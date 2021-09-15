@@ -7,3 +7,4 @@ spotipy
 wikipedia
 TenGiphPy
 discord.py
+psutil
