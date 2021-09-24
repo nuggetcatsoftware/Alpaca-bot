@@ -37,6 +37,7 @@ iam=[
     "i am",
     "i'm"
 ]
+from discord.ext.commands.cooldowns import BucketType
 import random
 import discord
 import os
@@ -266,6 +267,23 @@ async def on_message(message):
         response=random.choice(pon)
         await message.channel.send(response)
         await bot.process_commands(message)
-
+@bot.command(name="harass")
+@commands.cooldown(1,30,BucketType.user)
+async def harass(ctx, user: discord.User, num: int):
+    if num > 31:
+        embedVar=discord.Embed(title="Chill")
+        embedVar.add_field(name="Bruh", value="m8 you need a bo'oh o' wo'er m8 innit? calm tf down", inline=False)
+        embedVar.add_field(name="But", value="Premium users get more harrassment")
+        await ctx.channel.send(embed=embedVar)
+        return
+    else:
+        await ctx.send(f'Started pinging {user.name} {num} times.', delete_after=0.1)
+        for i in range(num):
+            await ctx.channel.send(user.mention, delete_after=0.1)
+        await ctx.send(f'Finished {num} pings for {user.name}', delete_after=0.1)
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.CommandOnCooldown):
+        await ctx.send(f"No. I am not allowing you to spam! Try again after {round(error.retry_after, 2)} seconds!")
 
 bot.run(config.BOT_TOKEN, bot=True)
