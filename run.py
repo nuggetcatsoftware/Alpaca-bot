@@ -276,6 +276,7 @@ async def harass(ctx, user: discord.User, num: int):
         embedVar.add_field(name="But", value="Premium users get more harrassment")
         await ctx.channel.send(embed=embedVar)
         return
+        
     else:
         await ctx.send(f'Started pinging {user.name} {num} times.', delete_after=0.1)
         for i in range(num):
