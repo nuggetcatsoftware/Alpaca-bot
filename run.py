@@ -164,18 +164,24 @@ async def on_message(message):
     elif "bad" in message.content.lower():
         resoinse=random.choice(badresponse)
         await message.channel.send(resoinse)
+        await bot.process_commands(message)
+    elif "KNN" in message.content.lower():
+        await message.channel.send("Kan Ni Niang")
         await bot.process_commands(message) 
+    elif "weak" in message.content.lower():
+        await message.channel.send("CIBAI")
+        await bot.process_commands(message)
     elif "sad" in message.content.lower():
         await message.channel.send("Sadge")
         await bot.process_commands(message)
     elif "janice" in message.content.lower():
-        await message.channel.send("Neptune")
+        await message.channel.send("Neptune?")
         await bot.process_commands(message)
     elif "fuck you" in message.content.lower():
-        await message.channel.send("Fuck you too")
+        await message.channel.send("Fuck me :sweat_drops: :sweat_drops: :sweat_drops: ")
         await bot.process_commands(message)
-    elif "fuck u" in message.content.lower():
-        await message.channel.send("Fuck u too")
+    elif "slut" in message.content.lower():
+        await message.channel.send("Go to horny jail, BONK!")
         await bot.process_commands(message)
     elif "happy" in message.content.lower():
         await message.channel.send("IKR, things are simple when you're happy")
@@ -186,14 +192,22 @@ async def on_message(message):
     elif "no you" in message.content.lower():
         await message.channel.send("no u ")
         await bot.process_commands(message)
+    elif "penis" in message.content.lower():
+        input =message.content.lower()
+        input = input.replace("penis", "lanjiao")
+        await message.channel.send(input)
+        await bot.process_commands(message)
+
     elif message.content.startswith("i am"):
         input=message.content.lower()
         input =input.replace("i am", "")
         await message.channel.send("Hi " + input + " I'm Alpaca")
+        await bot.process_commands(message)
     elif message.content.startswith("im"):
         input=message.content.lower()
         input =input.replace("im", "")
         await message.channel.send("Hi " + input + " I'm Alpaca")
+        await bot.process_commands(message)
     elif message.content.startswith("iam"):
         input=message.content.lower()
         input =input.replace("iam", "")
@@ -202,29 +216,36 @@ async def on_message(message):
         input=message.content.lower()
         input =input.replace("i'm", "")
         await message.channel.send("Hi " + input + " I'm Alpaca")
+        await bot.process_commands(message)
     elif message.content.startswith("I am"):
         input=message.content.lower()
         input =input.replace("i am", "")
         await message.channel.send("Hi " + input + " I'm Alpaca")
+        await bot.process_commands(message)
+    elif "fuck u" in message.content.lower():
+        await message.channel.send("Fuck u too")
+        await bot.process_commands(message)
     elif message.content.startswith("Im"):
         input=message.content.lower()
         input =input.replace("im", "")
         await message.channel.send("Hi " + input + " I'm Alpaca")
+        await bot.process_commands(message)
     elif message.content.startswith("Iam"):
         input=message.content.lower()
         input =input.replace("iam", "")
         await message.channel.send("Hi " + input + " I'm Alpaca")
+        await bot.process_commands(message)
     elif message.content.startswith("I'm"):
         input=message.content.lower()
         input =input.replace("i'm", "")
         await message.channel.send("Hi " + input + " I'm Alpaca")
+        await bot.process_commands(message)
+    elif "laurie" in message.content.lower():
+        await message.channel.send("Sexier than Cara lmao. Fuck you Neptune.")
+        await bot.process_commands(message)
     elif "cara" in message.content.lower():
         await message.channel.send("Neptune")
         await bot.process_commands(message)
-    elif "simp" in message.content.lower():
-        await message.channel.send("Neptune")
-        await bot.process_commands(message)
-    
     elif "jas" in message.content.lower():
         pon=[
             "poooooon",
@@ -245,5 +266,6 @@ async def on_message(message):
         response=random.choice(pon)
         await message.channel.send(response)
         await bot.process_commands(message)
+
 
 bot.run(config.BOT_TOKEN, bot=True)
